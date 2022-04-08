@@ -195,7 +195,6 @@ if(proff == 0){
     cout<<"Added to the Database"<<endl ; 
  cout<<"Write 1 to go to the Dashboard"<<endl;
    int one ;
-
   cin >> one ; 
   if(one==1)library.librarian_dashboard() ; 
     return ;
@@ -225,35 +224,46 @@ cin >> password  ;
 cout<<endl;
 int new_id ; 
 string new_password ; 
+bool p = false ; 
+if(proff== 0){
+      for(int i=0;i<List_of_Students.size();i++){
+         if(List_of_Students[i].Name == name && List_of_Students[i].ID == id && List_of_Students[i].password == password){
 cout<<"ENTER THE NEW ID : "<<endl;
 cin >> new_id ; 
 cout<<"Enter the new passoword : "<<endl;
 cin >> new_password ;
 cout<<endl;
-if(proff== 0){
-     for(auto it :List_of_Students ){
-         if(it.Name == name && it.ID == id && it.password == password){
-             it.Name  = name  ; 
-             it.ID = new_id  ; 
-             it.password = new_password ;  
+             List_of_Students[i].Name  = name  ; 
+            List_of_Students[i].ID = new_id  ; 
+            List_of_Students[i].password = new_password ;  
+             p = true ; 
          }
      }
-                  cout<<"Details are Updated Now!!"<<endl ; 
+     if(p==true)
+ cout<<"Details are Updated Now!!"<<endl ; 
+ else 
+ cout<<"Wrong details!!"<<endl;
 cout<<"Write 1 to go to the Dashboard"<<endl;
   int one ;
-
   cin >> one ; 
   if(one==1)library.librarian_dashboard() ; 
      return ; 
 }
-     for(auto it :List_of_Professors ){
-         if(it.Name == name && it.ID == id && it.password == password){
-             it.Name  = name  ; 
-             it.ID = new_id  ; 
-             it.password = new_password ; 
+      for(int i=0;i<List_of_Professors.size();i++){
+         if(List_of_Professors[i].Name == name && List_of_Professors[i].ID == id && List_of_Professors[i].password == password){
+cout<<"ENTER THE NEW ID : "<<endl;
+cin >> new_id ; 
+cout<<"Enter the new passoword : "<<endl;
+cin >> new_password ;
+cout<<endl;
+             List_of_Professors[i].Name = name  ; 
+             List_of_Professors[i].ID = new_id  ; 
+             List_of_Professors[i].password = new_password ; 
+             p = true ; 
          }
      }
-                  cout<<"Details are Updated Now!!"<<endl ; 
+if(p==true)cout<<"Details are Updated Now!!"<<endl ; 
+else cout<<"Wrong Details!!"<<endl;
 cout<<"Write 1 to go to the Dashboard"<<endl;
   int one ;
 
@@ -274,12 +284,14 @@ cin >> id ;
 cout<<"Enter the Password : "<<endl;
 cin >> password  ; 
 cout<<endl;
+bool p = false;  
 if(proff == 0 ){
     for(int i=0;i<List_of_Students.size();i++){
          if(List_of_Students[i].Name == name && List_of_Students[i].ID == id && List_of_Students[i].password == password){
 
             List_of_Students.erase(List_of_Students.begin() + i) ;
             cout<<"Student is deleted from the database!"<<endl;
+            p = true ; 
             break ; 
          }
     }
@@ -317,7 +329,7 @@ cout<<endl;
 if(proff == 0 ){
     for(auto it : List_of_Students){
          if(it.Name == name && it.ID == id && it.password == password){
-          cout<<"YES! The Student is present !!"<<endl;
+ cout<<"YES! The Student is present !!"<<endl;
  cout<<"Write 1 to go to the Dashboard"<<endl;
    int one ;
 
@@ -409,14 +421,14 @@ void Book_database :: Update(){
     cin >> c ; 
     cout<<endl; 
 
-    for(auto it : List_of_Books){
-        if(it.Title==title){
-         it.Author = author ; 
-         it.ISBN  = isbn ; 
-         it.Publication = publication ; 
-         it.issued_person_identity = a ; 
-         it.issued_or_not = b ;
-         it.date_of_issue = c ; 
+   for(int i=0;i<List_of_Books.size() ; i++){
+        if(List_of_Books[i].Title==title){
+         List_of_Books[i].Author = author ; 
+         List_of_Books[i].ISBN  = isbn ; 
+         List_of_Books[i].Publication = publication ; 
+         List_of_Books[i].issued_person_identity = a ; 
+         List_of_Books[i].issued_or_not = b ;
+         List_of_Books[i].date_of_issue = c ; 
              cout<<"THE BOOK HAS BEEN UPDATED!!!"<<endl;
 
         }
@@ -428,13 +440,25 @@ void Book_database :: Update(){
 }
 
 void Book_database :: Display_all_Books(){
-    for(auto it : List_of_Books ){
-        cout<<"Title : "<<it.Title<<" "<<"Author : "<<it.Author<<" "<<"ISBN : "<<it.ISBN <<" Publication  : "<<it.Publication<<" "<<"Issued or not  : "<<it.issued_or_not<<" "<<"Issued Person Identity : "<<it.issued_person_identity<<" "<<"Date of Issue : "<<it.date_of_issue<<endl;
-    }
-    cout<<"Write 1 to go to the Dashboard"<<endl;
+    if(List_of_Books.size()==0){
+        cout<<"CURRENTLY there is no book available!!"<<endl;
+  cout<<"Write 1 to go to the Dashboard , 2 to prof dashborad , 3 to student dashboard"<<endl;
   int one ;
   cin >> one ; 
-  if(one==1)library.librarian_dashboard() ; 
+  if(one==1)library.display() ; 
+  if(one==2)library.prof_dashboard();
+  if(one==3)library.student_dashboard();
+        return ; 
+    }
+    for(int i=0;i<List_of_Books.size();i++){
+        cout<<"Title : "<<        List_of_Books[i].Title<<" "<<"Author : "<<List_of_Books[i].Author<<" "<<"ISBN : "<<List_of_Books[i].ISBN <<" Publication  : "<<List_of_Books[i].Publication<<" "<<"Issued or not  : "<<List_of_Books[i].issued_or_not<<" "<<"Issued Person Identity : "<<List_of_Books[i].issued_person_identity<<" "<<"Date of Issue : "<<List_of_Books[i].date_of_issue<<endl;
+    }
+    cout<<"Write 1 to go to the Dashboard , 2 to prof dashborad , 3 to student dashboard"<<endl;
+  int one ;
+  cin >> one ; 
+  if(one==1)library.display() ; 
+  if(one==2)library.prof_dashboard();
+  if(one==3)library.student_dashboard();
 }
 void Book_database :: Delete(){
     string title , author , isbn , Publication ;
@@ -542,12 +566,21 @@ void Librarian :: List_down_all_books_for_Student(){
             for(auto it1 : it.List_of_Books){
               m[it1] = 1 ; 
             }
+            if(it.List_of_Books.size()==0){
+                cout<<"Currently No Book issued "<<endl;
+  cout<<"Write 1 to go to the Dashboard"<<endl;
+  int one ;
+  cin >> one ; 
+  if(one==1)library.librarian_dashboard() ; 
+        return;
+            }
             for(int i=0;i<library_bookdatabase.List_of_Books.size();i++){
                 if(m.find(i)!=m.end()){
                     auto it1 = library_bookdatabase.List_of_Books[i] ;
                      cout<<"Title : "<<it1.Title<<" "<<"Author : "<<it1.Author<<" ISBN : "<<it1.ISBN<<endl;
                 }
         }
+
  cout<<"Write 1 to go to the Dashboard"<<endl;
   int one ;
   cin >> one ; 
@@ -566,6 +599,14 @@ void Librarian :: List_down_all_books_for_Professor(){
             unordered_map<int,int>m;
             for(auto it1 : it.List_of_Books){
               m[it1] = 1 ; 
+            }
+                        if(it.List_of_Books.size()==0){
+                cout<<"Currently No Book issued "<<endl;
+  cout<<"Write 1 to go to the Dashboard"<<endl;
+  int one ;
+  cin >> one ; 
+  if(one==1)library.librarian_dashboard() ; 
+        return;
             }
             for(int i=0;i<library_bookdatabase.List_of_Books.size();i++){
                 if(m.find(i)!=m.end()){
@@ -598,7 +639,9 @@ void Library :: librarian_dashboard(){
     cout << "8. Display all Books\n";
     cout << "9. Search a user who has a particular book\n";
     cout << "10. List down all the books issued to a user\n";
-    cout << "11. Logout\n";
+    cout << "11. Search for a User\n";
+    cout << "12. Search for a Book\n";
+    cout << "13. Logout\n";
 
     int choice;
     cin >> choice;
@@ -645,8 +688,13 @@ void Library :: librarian_dashboard(){
     case 10:
         library_userdatabase.librarian.List_down_all_books_for_user();
         break;
-
-    case 11:
+      case 11:
+        library_userdatabase.Search();
+        break;
+       case 12 :
+       library_bookdatabase.Search();
+       break;
+    case 13:
         library.logout();
         break;
 
@@ -736,6 +784,9 @@ void Student :: Display_Issued_books(){
              cout<<"Title : "<<it.Title<<" "<<"Author : "<<it.Author<<" ISBN : "<<it.ISBN<<endl;
          }
     }
+        if(List_of_Books.size()==0){
+        cout<<"Currently Nothing is issued yet!!"<<endl;
+    }
 cout<<"Write 1 to go to the Dashboard"<<endl;
   int one ;
   cin >> one ; 
@@ -762,7 +813,7 @@ void Student :: Calculate_fine(){
                if(fine==0)cout<<"NO FINE!"<<endl;
                else{
                 cout<<"GIVE FINE OF : "<<endl;
-                cout<<fine<<endl;
+                cout<<Fine_amount<<endl;
                }
   cout<<"Write 1 to go to the Dashboard"<<endl;
   int one ;
@@ -908,6 +959,9 @@ void Professor :: Display_Issued_books(){
              cout<<"Title : "<<it.Title<<" "<<"Author : "<<it.Author<<" ISBN : "<<it.ISBN<<endl;
          }
     }
+    if(List_of_Books.size()==0){
+        cout<<"Currently Nothing is issued yet!!"<<endl;
+    }
 cout<<"Write 1 to go to the Dashboard"<<endl;
   int one ;
   cin >> one ; 
@@ -934,7 +988,7 @@ void Professor :: Calculate_fine(){
                if(fine==0)cout<<"NO FINE!"<<endl;
                else{
                 cout<<"GIVE FINE OF : "<<endl;
-                cout<<fine<<endl;
+                cout<<Fine_amount<<endl;
                }
   cout<<"Write 1 to go to the Dashboard"<<endl;
   int one ;
